@@ -1,24 +1,32 @@
 (function () {
-    let showAllPhotos = false;
+    let activeLightboxIdx = null;
 
     function el(id) {
         return document.getElementById(id);
     }
 
     function renderNavbar() {
+        const b = SITE_DATA.brand;
+        const subHtml = (b.subtitleLines || [b.subtitle])
+            .map((line) => `<span>${line}</span>`)
+            .join("");
+
         el("navbar-mount").innerHTML = `
             <nav class="navbar">
                 <div class="container navbar-inner">
                     <a href="#hero-mount" class="brand">
-                        <span class="brand-name">${SITE_DATA.brand.name}</span>
-                        <span class="brand-sub">${SITE_DATA.brand.subtitle}</span>
+                        <img src="${b.logo}" alt="${b.name} logó" class="brand-logo" />
+                        <div class="brand-text">
+                            <span class="brand-name">${b.name}</span>
+                            <span class="brand-sub">${subHtml}</span>
+                        </div>
                     </a>
                     <ul class="nav-links">
                         ${SITE_DATA.nav.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}
                     </ul>
                     <div class="nav-actions">
-                        <a href="${SITE_DATA.brand.phoneHref}" class="btn btn-primary nav-phone-pill">
-                            ☎ ${SITE_DATA.brand.phone}
+                        <a href="${b.phoneHref}" class="btn btn-primary nav-phone-pill">
+                            ☎ ${b.phone}
                         </a>
                         <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Menü megnyitása">☰</button>
                     </div>
@@ -27,8 +35,8 @@
                     <ul>
                         ${SITE_DATA.nav.map((item) => `<li><a href="${item.href}" class="mobile-nav-link">${item.label}</a></li>`).join("")}
                     </ul>
-                    <a href="${SITE_DATA.brand.phoneHref}" class="btn btn-primary" style="width:100%;">
-                        ☎ Hívás most: ${SITE_DATA.brand.phone}
+                    <a href="${b.phoneHref}" class="btn btn-primary" style="width:100%;">
+                        ☎ Hívás most: ${b.phone}
                     </a>
                 </div>
             </nav>
@@ -48,7 +56,7 @@
             <div class="hero">
                 <img src="${h.image}" alt="${SITE_DATA.brand.name}" class="hero-bg" />
                 <div class="hero-overlay"></div>
-                <div class="container">
+                <div class="container hero-container">
                     <div class="hero-content">
                         <div class="hero-badge">${h.badge}</div>
                         <h1 class="hero-title">${h.title}</h1>
@@ -82,7 +90,7 @@
                         <div class="about-highlights">
                             ${a.chips.map((c) => `<span class="highlight-chip">✓ ${c}</span>`).join("")}
                         </div>
-                        <a href="#contact-mount" class="btn btn-primary">Kérj szabad időpontot →</a>
+                        <a href="#contact-mount" class="btn btn-primary">Ajánlatot kérek →</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +118,7 @@
                     <div class="section-header">
                         <span class="eyebrow">Szolgáltatások</span>
                         <h2 class="section-title">Ünnepi pillanatok, Rátok szabva</h2>
-                        <p class="section-subtitle">Válasszátok ki a számotokra legfontosabb ceremóniát, és kattintsatok a részletekért.</p>
+                        <p class="section-subtitle">Válasszátok ki a számotokra érdekes szolgáltatást, és kattintsatok a részletekért.</p>
                     </div>
                     <div class="services-grid">
                         ${SITE_DATA.services
@@ -182,9 +190,8 @@
                                 ${p.included.map((inc) => `<li><span class="check-icon">✓</span><span>${inc}</span></li>`).join("")}
                             </ul>
                         </div>
-                        <div class="wilde-box">
-                            <p style="font-family:var(--font-serif);font-style:italic;margin:0 0 8px 0;font-size:1.05rem;">${p.wildeQuote}</p>
-                            <div style="font-size:0.82rem;font-weight:700;color:var(--rose-dark);letter-spacing:0.1em;text-transform:uppercase;">— ${p.wildeAuthor}</div>
+                        <div class="included-photo-frame">
+                            <img src="${p.includedImage}" alt="${p.includedImageAlt}" loading="lazy" />
                         </div>
                     </div>
                 </div>
@@ -194,7 +201,6 @@
 
     function renderReferences() {
         const r = SITE_DATA.references;
-        const visiblePhotos = showAllPhotos ? r.photos : r.photos.slice(0, 12);
 
         el("references-mount").innerHTML = `
             <div class="references-section section-pad">
@@ -219,36 +225,77 @@
                             )
                             .join("")}
                     </div>
-                    <div class="gallery-grid">
-                        ${visiblePhotos
-                            .map(
-                                (ph, idx) => `
-                            <div class="gallery-tile" data-photo-idx="${idx}">
-                                <img src="${ph.src}" alt="${ph.label}" loading="lazy" />
-                                <div class="gallery-caption">${ph.label}</div>
+                    <div class="gallery-carousel-shell">
+                        <div class="gallery-carousel-controls-bar">
+                            <div class="gallery-carousel-label">
+                                Kattints bármelyik fotóra a nagyításhoz • Lapozz oldalra (${r.photos.length} pár)
                             </div>
-                        `
-                            )
-                            .join("")}
-                    </div>
-                    <div class="gallery-more-wrap">
-                        <button class="btn btn-outline" id="toggle-photos-btn">
-                            ${showAllPhotos ? "Kevesebb fotó mutatása" : `Összes referencia fotó megtekintése (${r.photos.length} pár)`}
-                        </button>
+                            <div class="gallery-carousel-arrows">
+                                <button class="carousel-nav-btn" id="ref-prev-btn" aria-label="Előző fotók">‹</button>
+                                <span class="carousel-counter" id="ref-counter">1–4 / ${r.photos.length}</span>
+                                <button class="carousel-nav-btn" id="ref-next-btn" aria-label="Következő fotók">›</button>
+                            </div>
+                        </div>
+                        <div class="gallery-carousel-viewport" id="ref-viewport">
+                            <div class="gallery-carousel-track" id="ref-track">
+                                ${r.photos
+                                    .map(
+                                        (ph, idx) => `
+                                    <div class="gallery-tile gallery-slide" data-photo-idx="${idx}">
+                                        <img src="${ph.src}" alt="${ph.label}" loading="lazy" />
+                                        <div class="gallery-caption">${ph.label}</div>
+                                    </div>
+                                `
+                                    )
+                                    .join("")}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         `;
 
-        el("toggle-photos-btn").addEventListener("click", () => {
-            showAllPhotos = !showAllPhotos;
-            renderReferences();
-        });
+        const viewport = el("ref-viewport");
+        const track = el("ref-track");
+        const prevBtn = el("ref-prev-btn");
+        const nextBtn = el("ref-next-btn");
+        const counter = el("ref-counter");
 
-        document.querySelectorAll(".gallery-tile").forEach((tile) => {
+        function updateCounter() {
+            const slides = track.querySelectorAll(".gallery-slide");
+            if (!slides.length) return;
+            const slideW = slides[0].offsetWidth + 16;
+            const visibleCount = Math.max(1, Math.round(viewport.clientWidth / slideW));
+            const firstIdx = Math.min(
+                r.photos.length - visibleCount,
+                Math.max(0, Math.round(viewport.scrollLeft / slideW))
+            );
+            const start = firstIdx + 1;
+            const end = Math.min(r.photos.length, firstIdx + visibleCount);
+            counter.textContent = `${start}–${end} / ${r.photos.length}`;
+        }
+
+        function slideByPage(dir) {
+            const step = Math.max(260, viewport.clientWidth * 0.88);
+            const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+            if (dir > 0 && viewport.scrollLeft >= maxScroll - 8) {
+                viewport.scrollTo({ left: 0, behavior: "smooth" });
+            } else if (dir < 0 && viewport.scrollLeft <= 8) {
+                viewport.scrollTo({ left: maxScroll, behavior: "smooth" });
+            } else {
+                viewport.scrollBy({ left: dir * step, behavior: "smooth" });
+            }
+        }
+
+        prevBtn.addEventListener("click", () => slideByPage(-1));
+        nextBtn.addEventListener("click", () => slideByPage(1));
+        viewport.addEventListener("scroll", updateCounter, { passive: true });
+        window.addEventListener("resize", updateCounter);
+        setTimeout(updateCounter, 50);
+
+        track.querySelectorAll(".gallery-tile").forEach((tile) => {
             tile.addEventListener("click", () => {
-                const ph = SITE_DATA.references.photos[Number(tile.dataset.photoIdx)];
-                openLightbox(ph);
+                openLightbox(Number(tile.dataset.photoIdx));
             });
         });
     }
@@ -321,6 +368,7 @@
 
     function renderContact() {
         const c = SITE_DATA.contact;
+        const b = SITE_DATA.brand;
         el("contact-mount").innerHTML = `
             <div class="contact-section section-pad">
                 <div class="container">
@@ -331,24 +379,26 @@
                     </div>
                     <div class="contact-grid">
                         <div class="contact-info-card">
-                            <img src="${c.photo}" alt="${SITE_DATA.brand.name}" class="contact-portrait" loading="lazy" />
-                            <div class="contact-list">
-                                <a href="${SITE_DATA.brand.phoneHref}" class="contact-row">
-                                    <span class="contact-label">Közvetlen telefon / Hívás most</span>
-                                    <span class="contact-val">☎ ${SITE_DATA.brand.phone}</span>
-                                </a>
-                                <a href="mailto:${SITE_DATA.brand.email}" class="contact-row">
-                                    <span class="contact-label">E-mail</span>
-                                    <span class="contact-val">${SITE_DATA.brand.email}</span>
-                                </a>
-                                <div class="contact-row" style="border-bottom:none;padding-bottom:0;">
-                                    <span class="contact-label">Terület & Elérhetőség</span>
-                                    <span class="contact-val">${SITE_DATA.brand.location} – Rugalmas egyeztetéssel</span>
-                                </div>
+                            <h3 style="font-family:var(--font-serif);margin:0 0 12px 0;font-size:1.45rem;">Közvetlen elérhetőségek</h3>
+                            <a href="${b.phoneHref}" class="contact-row">
+                                <span class="contact-label">Telefon / Viber hívás</span>
+                                <span class="contact-val">☎ ${b.phone}</span>
+                            </a>
+                            <a href="mailto:${b.email}" class="contact-row">
+                                <span class="contact-label">E-mail</span>
+                                <span class="contact-val">${b.email}</span>
+                            </a>
+                            <div class="contact-row">
+                                <span class="contact-label">Elérhetőség</span>
+                                <span class="contact-val">${b.hours}</span>
+                            </div>
+                            <div class="contact-row" style="border-bottom:none;padding-bottom:0;">
+                                <span class="contact-label">Terület & Elérhetőség</span>
+                                <span class="contact-val">${b.location} – Rugalmas egyeztetéssel</span>
                             </div>
                         </div>
                         <div class="contact-form-card">
-                            <h3 style="font-family:var(--font-serif);margin:0 0 6px 0;font-size:1.6rem;">Visszahívás & Időpont egyeztetés</h3>
+                            <h3 style="font-family:var(--font-serif);margin:0 0 6px 0;font-size:1.45rem;">Visszahívás & Időpont egyeztetés</h3>
                             <p style="margin:0 0 22px 0;color:var(--text-muted);font-size:0.92rem;">Adjátok meg a főbb adatokat, és 24 órán belül visszahívlak vagy írok Nektek!</p>
                             <form id="inquiry-form">
                                 <div class="form-group">
@@ -380,36 +430,44 @@
             const subject = encodeURIComponent(`Szertartásvezető érdeklődés – ${name}`);
             const body = encodeURIComponent(`Név: ${name}\nElérhetőség: ${contact}\nÜzenet / Részletek:\n${details}`);
             const status = el("form-status");
-            status.innerHTML = `Köszönöm, ${name}! Ha nem nyílt meg az e-mail kliensed, közvetlenül is elérsz a <strong>${SITE_DATA.brand.phone}</strong> számon vagy az <a href="mailto:${SITE_DATA.brand.email}?subject=${subject}&body=${body}" style="text-decoration:underline;">${SITE_DATA.brand.email}</a> címen.`;
+            status.innerHTML = `Köszönöm, ${name}! Ha nem nyílt meg az e-mail kliensed, közvetlenül is elérsz a <strong>${b.phone}</strong> számon vagy az <a href="mailto:${b.email}?subject=${subject}&body=${body}" style="text-decoration:underline;">${b.email}</a> címen.`;
             status.classList.add("visible");
-            window.location.href = `mailto:${SITE_DATA.brand.email}?subject=${subject}&body=${body}`;
+            window.location.href = `mailto:${b.email}?subject=${subject}&body=${body}`;
         });
     }
 
     function renderFooter() {
+        const b = SITE_DATA.brand;
+        const subHtml = (b.subtitleLines || [b.subtitle]).join("<br/>");
         el("footer-mount").innerHTML = `
             <div class="footer">
                 <div class="container">
                     <div class="footer-grid">
                         <div>
-                            <h3 class="footer-brand">${SITE_DATA.brand.name}</h3>
-                            <p style="margin:0 0 14px 0;font-size:0.9rem;">${SITE_DATA.brand.subtitle}<br/>${SITE_DATA.brand.location}</p>
+                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                                <img src="${b.logo}" alt="${b.name}" style="height:52px;width:52px;object-fit:contain;" />
+                                <div>
+                                    <h3 class="footer-brand">${b.name}</h3>
+                                    <div style="font-size:0.78rem;color:var(--rose-dark);font-weight:600;line-height:1.3;">${subHtml}</div>
+                                </div>
+                            </div>
+                            <p style="margin:0 0 14px 0;font-size:0.9rem;">${b.location}</p>
                             <div style="display:flex;gap:12px;">
-                                <a href="${SITE_DATA.brand.facebook}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light" style="padding:7px 16px;font-size:0.82rem;">Facebook</a>
-                                <a href="${SITE_DATA.brand.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light" style="padding:7px 16px;font-size:0.82rem;">Instagram</a>
+                                <a href="${b.facebook}" target="_blank" rel="noopener noreferrer" class="btn btn-footer-social">Facebook</a>
+                                <a href="${b.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-footer-social">Instagram</a>
                             </div>
                         </div>
                         <div>
-                            <h4 style="color:#fff;margin:0 0 12px 0;font-size:0.95rem;">Gyorsmenü</h4>
+                            <h4 class="footer-heading">Gyorsmenü</h4>
                             <ul class="footer-links">
                                 ${SITE_DATA.nav.map((n) => `<li><a href="${n.href}">${n.label}</a></li>`).join("")}
                             </ul>
                         </div>
                         <div>
-                            <h4 style="color:#fff;margin:0 0 12px 0;font-size:0.95rem;">Elérhetőség & Jogi adatok</h4>
+                            <h4 class="footer-heading">Elérhetőség & Jogi adatok</h4>
                             <ul class="footer-links">
-                                <li><a href="${SITE_DATA.brand.phoneHref}">${SITE_DATA.brand.phone}</a></li>
-                                <li><a href="mailto:${SITE_DATA.brand.email}">${SITE_DATA.brand.email}</a></li>
+                                <li><a href="${b.phoneHref}">Telefon / Viber: ${b.phone}</a></li>
+                                <li><a href="mailto:${b.email}">${b.email}</a></li>
                                 <li><a href="https://www.vegsobucsu.hu" target="_blank" rel="noopener noreferrer">Polgári búcsúztatás (vegsobucsu.hu)</a></li>
                                 <li><button class="footer-link-btn" data-legal="impresszum">Impresszum</button></li>
                                 <li><button class="footer-link-btn" data-legal="adatkezeles">Adatkezelési tájékoztató</button></li>
@@ -454,10 +512,12 @@
     }
 
     function closeModal() {
+        activeLightboxIdx = null;
         el("modal-mount").innerHTML = "";
     }
 
     function openServiceModal(serviceId) {
+        activeLightboxIdx = null;
         const s = SITE_DATA.services.find((item) => item.id === serviceId);
         if (!s) return;
         openModal(`
@@ -479,6 +539,7 @@
     }
 
     function openBlogModal(blogId) {
+        activeLightboxIdx = null;
         const b = SITE_DATA.blogs.find((item) => item.id === blogId);
         if (!b) return;
         openModal(`
@@ -494,14 +555,27 @@
         `);
     }
 
-    function openLightbox(photo) {
+    function openLightbox(idx) {
+        const photos = SITE_DATA.references.photos;
+        activeLightboxIdx = (idx + photos.length) % photos.length;
+        const photo = photos[activeLightboxIdx];
         openModal(`
-            <h2 style="margin-bottom:14px;">${photo.label}</h2>
-            <img src="${photo.src}" alt="${photo.label}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:14px;background:#faf5f4;" />
+            <div class="lightbox-header">
+                <h2 style="margin:0;">${photo.label}</h2>
+                <span class="lightbox-count">${activeLightboxIdx + 1} / ${photos.length}</span>
+            </div>
+            <div class="lightbox-stage">
+                <button class="lightbox-nav lightbox-prev" id="lb-prev" aria-label="Előző kép">‹</button>
+                <img src="${photo.src}" alt="${photo.label}" class="lightbox-img" />
+                <button class="lightbox-nav lightbox-next" id="lb-next" aria-label="Következő kép">›</button>
+            </div>
         `);
+        el("lb-prev").addEventListener("click", () => openLightbox(activeLightboxIdx - 1));
+        el("lb-next").addEventListener("click", () => openLightbox(activeLightboxIdx + 1));
     }
 
     function openLegalModal(type) {
+        activeLightboxIdx = null;
         const title = type === "impresszum" ? "Impresszum" : "Adatkezelési tájékoztató";
         const lines = SITE_DATA.legal[type] || [];
         openModal(`
@@ -512,6 +586,10 @@
 
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeModal();
+        if (activeLightboxIdx !== null) {
+            if (e.key === "ArrowLeft") openLightbox(activeLightboxIdx - 1);
+            if (e.key === "ArrowRight") openLightbox(activeLightboxIdx + 1);
+        }
     });
 
     renderNavbar();

@@ -1,13 +1,16 @@
 const SITE_DATA = {
     brand: {
         name: "Debreczeni Anita",
-        subtitle: "Okleveles szertartásvezető • Esküvőszervező",
+        logo: "assets/logo-szertartasmester.png",
+        subtitleLines: ["Okleveles szertartásvezető", "Okleveles esküvőszervező"],
+        subtitle: "Okleveles szertartásvezető • Okleveles esküvőszervező",
         phone: "+36 70 335 4440",
         phoneHref: "tel:+36703354440",
         email: "anita@szertartasmester.hu",
         facebook: "https://www.facebook.com/szertartasmesteranita",
         instagram: "https://www.instagram.com/szertartasvezeto_anita",
-        location: "Budapest, Pest vármegye és országosan",
+        hours: "Minden hétköznap és hétvégén 8:00 – 20:00",
+        location: "Budapest, Pest megye és országosan",
     },
     nav: [
         { label: "Bemutatkozás", href: "#about-mount" },
@@ -20,16 +23,15 @@ const SITE_DATA = {
     ],
     hero: {
         badge: "Okleveles szertartásvezető • 10+ év tapasztalat",
-        title: "A Nagy Nap, amely <span>valóban Rólatok szól</span>",
+        title: "Szertartás, amely <span>valóban Rólatok szól</span>",
         description:
-            "Személyre szabott esküvői szertartásvezetés, fogadalom megújítás és névadó ceremónia Budapesten, országszerte és határon túl – kötöttségek nélkül, szívvel-lélekkel.",
-        image: "assets/hero-anita.webp",
+            "Személyre szabott esküvői szertartásvezetés, házassági évforduló, és névadó ceremónia Budapesten, országosan és határon túl * Kötöttségek helyett szabadság * Sablonok helyett egyediség * Szertartás úgy - ahogy megálmodtátok",
+        image: "assets/hero-anita-new.webp",
         primaryCta: "Hívj most: +36 70 335 4440",
         secondaryCta: "Ajánlatot kérek",
         trust: [
             "Egy nap – egy esküvő elv",
-            "Budapest és 20 km-es körzetében díjmentes kiszállás",
-            "Korlátlan előzetes egyeztetés",
+            "Budapesten és 50 km-es körzetében díjmentes kiszállás",
         ],
     },
     about: {
@@ -62,10 +64,10 @@ const SITE_DATA = {
                 "Akkor, ott és úgy mondjátok ki az igent, ahogyan megálmodtátok – kötött hivatali sablonok nélkül, bármilyen helyszínen.",
             image: "assets/kepek/fooldal/eskuvoi szertartasvezetes.webp",
             modalContent: [
-                "Megkérted a kezét, vagy igent mondtál neki? Szeretettel gratulálok! ♥ Tény, hogy a menyasszonyi ruha és a torta is fontos kellékei egy esküvőnek, de a fénypont, az esszenciális eleme mégis a szertartás maga.",
-                "Tradicionális és konzervatív szertartás? Vagy bohém és vagány? Vallási elemekkel ötvözött vagy spirituális jellegű? Egymás kezét fogva a természetben, lombos fák alatt, tóparton a stégen naplementekor vagy egy kastély kertjében – nincsenek helyszínnel kapcsolatos korlátok!",
-                "Az egy nap – egy esküvő elvét követem, az esketés nálam nem futószalagon történik. Előre leegyeztetünk mindent lépésenként, hangosítástól függetlenül tisztán, érthetően beszélek, így a hátsó sorban ülő vendégek is minden szót élvezhetnek.",
-                "Fontos tudnivaló: a szertartásvezető nem hivatalos személy, ezért a ceremóniát megelőzően (akár hétköznap két tanúval) az anyakönyvi hivatalban szükséges aláírni a házassági lapot – ezt követően a szertartásotokat bárhol, akár még aznap megtartom.",
+                "Megkérted a kezét, vagy igent mondtál neki? Szeretettel gratulálok!",
+                "Ugye Ti is úgy gondoljátok, hogy semmiképpen sem hétköznapi történet, amikor kimondjuk az IGEN-t! Különleges személlyel, egy különleges alkalom!",
+                "Ti hogyan képzelitek el szertartásotokat a Nagy Napon? Milyennek szeretnétek látni? Mit szeretnétek hallani? Hogyan szeretnétek visszaemlékezni rá, évek múltán? Tradicionális és konzervatív szertartás? Vagy bohém, és vagány? Vallási elemekkel ötvözött? Vagy inkább spirituális jellegű? Egymás kezét fogva - a természetben, lombos fák alatt? Vagy egy gyönyörű tó partján a stégen, naplementekor? Esetleg egy hegytetőn, csodás panorámával a háttérben? Kiket szeretnétek látni Magatok körül? Legyen intim és meghitt, szűk családi körben, a közeli barátokkal? Netalán nagy társasági eseményre vágytok, mert szeretitek a felhajtást, sok-sok meghívottal? Bármilyen stílusú szertartás is legyen az álmotok, bármilyen helyszínen - a legjobb helyen jártok! Partner vagyok mindenben! Ha nincs elképzelésetek, segítek – találjuk ki együtt!",
+                "Ne féljetek megmutatni valódi személyiségeteket! Mint ahogy minden ember egyedi, és kivételes személyiség, úgy a pároknak is megvan a maga egyedülálló és érdekes története. Hála a szertartásvezetés intézményének, az esketés történhet akkor - ott - és úgy - ahogy TI szeretnétek! Éljetek ezzel a lehetőséggel, érdemes!",
             ],
             gallery: [
                 "assets/kepek/eskuvoi-szertartas/eskuvoi-szertartas-oltar.webp",
@@ -81,9 +83,10 @@ const SITE_DATA = {
                 "Ünnepeljétek meg az együtt töltött éveket egy meghitt, személyes fogadalom-megújító ceremóniával család és barátok körében.",
             image: "assets/kepek/fooldal/hazassagievfordulo-imagefoto.webp",
             modalContent: [
-                "1, 5, 7, 10, 15, 20, 25 vagy 50 év házasság… Örök igazság, hogy házasságot kötni egyszerű, de Márait idézve: „Sokkal nehezebb megőrizni valamit, mint szerezni vagy elpusztítani!”",
-                "Sok házaspár a fogadalom megújító szertartás keretében szeretné megünnepelni, hogy többé és értékesebbé vált társa által a közösen bejárt út során. Kiváló alkalom ez köszönetet mondani egymásnak az együtt töltött szép évekért és erőt meríteni a következőkhöz.",
-                "Bármely házassági évfordulóra – legyen az gyapjú, bőr, rózsa, porcelán, ezüst, gyöngy, arany vagy rubin – boldogan vállalok szertartásvezetést!",
+                "Minden egyes házassági évforduló ünnep! 1, 5, 7, 10, 15, 20, 25, vagy 50 év házasság… vagy akár még ennél is hosszabb együtt töltött idő… Örök igazság, hogy házasságot kötni egyszerű. De Márai-t idézve: „Sokkal nehezebb megőrizni valamit, mint szerezni vagy elpusztítani!”",
+                "Megtartani a boldogságot, megőrizni a házasság szépségét, harmóniáját - többnyire nehéz és küzdelmes feladat. Mégis szép számmal vannak házaspárok, akik a hosszú évekkel, évtizedekkel korábban tett házassági fogadalmukhoz hűen, kitartottak/kitartanak egymás mellett jóban, és rosszban. Ez különleges, és csodálatos dolog, ami mindenképpen figyelmet érdemel!",
+                "Sok házaspár a fogadalom megújító szertartás keretében szeretné kinyilatkozni és megünnepelni, hogy többé, értékesebbé vált házastársa által a házasság ideje alatt bejárt útja során. Kiváló alkalom ez arra, hogy köszönetet mondjanak egymásnak az együtt töltött szép évekért, és hogy erőt merítsenek, és adjanak egymásnak a még előttük álló útra. A legtöbb megerősítő szertartás egy kerek házassági évforduló alkalmával történik. Mindamellett, adódhatnak egy pár életében ettől eltérő olyan helyzetek is, amelyek indokolttá tehetik egy fogadalom megújító / megerősítő szertartás megtartását. Ilyen lehet például: egy hosszabb külön töltött idő után történő békülés, vagy egy nehéz, kihívásokkal teli időszakon való sikeres túljutás.",
+                "Nagy szerencse és áldás, ha a pár olyanokkal is megoszthatja ezeket a pillanatokat, akik már a házasságkötésük alkalmakor is jelen voltak. Ha Önök is azon házaspárok közé tartoznak, akik felgyorsult, folyamatosan változó világunkban megtartották ígéretüket, és szeretnék megerősíteni összetartozásukat, megújítani korábban tett fogadalmukat – keressenek bizalommal! Bármely házassági évfordulóra, legyen az: gyapjú / bőr / rózsa / porcelán / ezüst / gyöngy / arany /vagy rubin - boldogan vállalok szertartásvezetést!",
             ],
             gallery: [
                 "assets/kepek/hazassagi-evfordulo/hazassagi-evfordulo-unnep.webp",
@@ -99,14 +102,17 @@ const SITE_DATA = {
                 "Elfogadó, ítélkezésmentes, teljes mértékben rólatok szóló ünnepi szertartás – sablonok és korlátok nélkül.",
             image: "assets/kepek/lmbtq/azonos-nemuek-szolgaltatas.webp",
             modalContent: [
-                "A szerelem nem sablonra szabott, és nincs forgatókönyve. Legyen szó két nőről, két férfiról, vagy bárkiről, aki megtalálta azt az embert, akivel szeretné leélni az életét – minden szerelem megérdemli, hogy ünnepeljék.",
-                "Mivel a bejegyzett élettársi kapcsolat hivatali adminisztrációja kevéssé ünnepélyes, kiemelt jelentősége van a személyes, meghitt ceremóniának, ahol abszolút elfogadó, támogató és ítélkezésmentes légkört teremtek Számotokra.",
-                "Őszinte, meghitt, könnyed, bohém vagy végtelenül romantikus – bármely helyszínen, szabadon választott szimbolikus rituálékkal, teljesen a Ti történetetekre szabva.",
+                "A szerelem nem sablonra szabott, és nincs forgatókönyve. És nem is kell, hogy legyen! Két ember találkozik. Egymásra néznek. Közel kerülnek egymáshoz. És egyszer csak megszületik az érzés: igen, ő az. Megérkeztem, vele vagyok otthon. Őt akarom, vele képzelem el az életemet.",
+                "Legyen szó két nőről, két férfiról, vagy bárkiről, aki megtalálta azt az embert, akivel szeretné leélni az életét – a legfontosabb nem az, hogy milyen címkét viselnek, hanem az, hogy mit jelentenek egymásnak. Mert hiszem, hogy minden szerelem megérdemli, hogy ünnepeljék. Minden pár megérdemli, hogy önmaga lehessen. És minden „igen” akkor a legszebb, ha szabadon, őszintén és teljes szívből születik.",
+                "Magyarországon az azonos neműek házassága egyelőre nem legális, az Alaptörvény ugyanis jelenleg egy férfi és egy nő kapcsolataként határozza meg a házasságot. Viszont van lehetőség arra, hogy az azonos nemű párok anyakönyvvezető előtt bejegyzett élettársi kapcsolatot létesíthetnek. Ez az intézmény a házassággal szinte teljesen azonos jogokat és kötelezettségeket biztosít. Az élettársi kapcsolat bejegyzése két tanú jelenlétében történik, és lényegében egy adminisztratív hivatali procedúra. Meghittnek, és ünnepélyesnek egyáltalán nem mondható.",
+                "Ezért is van jelentősége az informális, de egyedi szertartásnak, mely során abszolút elfogadó, támogató és ítélkezésmentes légkört teremtek Számotokra. Egy szertartás, amely teljes egészében Rólatok szólhat, pontosan az elképzeléseiteknek megfelelően. Egy szertartás, ami nem akar másnak láttatni benneteket, és ahol nem kell beleférnetek semmilyen sablonba. Nem kell megfelelnetek hagyományoknak, elvárásoknak, hanem minden a ti kívánságotok szerint történik.",
+                "Legyen a szertartásotok olyan szabad, mint amilyen a szerelmetek. Őszinte. Meghitt. Könnyed. Szenvedélyes. Bohém. Elegáns. Kicsit őrült. Végtelenül romantikus. Vagy akár mindez egyszerre! Bármely helyszínen, szabadon választott szimbolikus rituálékkal! A szerelemnek nincs határa. A szertartásotoknak sem kell, hogy legyen! Én azért vagyok mellettetek, hogy a kettőtök történetéből egy őszinte, és igazán személyes szertartás szülessen, ahol igazán önmagatok lehettek. Ha azonos neműként szeretnétek igénybe venni szertartásvezetői szolgáltatásomat, keressetek bátran, bizalommal!",
             ],
             gallery: [
                 "assets/kepek/lmbtq/melegek.webp",
                 "assets/kepek/lmbtq/melegek-nok.webp",
-                "assets/kepek/lmbtq/montazs-melegek.webp",
+                "assets/kepek/lmbtq/melegpar-pasik.webp",
+                "assets/kepek/lmbtq/melegek-nok-pasik-montazs.webp",
             ],
         },
         {
@@ -116,8 +122,9 @@ const SITE_DATA = {
                 "Meghitt, vallási dogmáktól független családi ünnep újszülött gyermeketek köszöntésére és hivatalos nevének átadására.",
             image: "assets/kepek/fooldal/nevado-image foto.webp",
             modalContent: [
-                "A névadás az identitás és a családhoz tartozás kifejezése. A névadó ünnepség nem keresztelő, hanem annak polgári alternatívája vagy kiegészítője – egy egyedi, könnyedebb hangulatú, személyre szabott családi ceremónia.",
-                "A szülők és a névadó szülők szimbolikus fogadalmakat tesznek, én pedig szertartásvezetőként emléklapot adok át. A ceremóniát igény szerint zenei és szimbolikus elemekkel (gyertyagyújtás, homokceremónia) tesszük még emlékezetesebbé.",
+                "Számos kultúrában a gyermek születését szinte azonnal ünnepség kíséri. A névadás – az identitás, és egyben a családhoz tartozás kifejezése. A névválasztás sokszor már a babavárás időszakában megtörténik, így a nevet még a gyermek megszületése előtt kiválasztják. Így van ez Európában, és az USA-ban, de a világ sok más részén is. A névválasztás mindig izgalmas, különleges alkalom, hiszen egy életre szól… és mint tudjuk - „a név kötelez!”",
+                "Fontos tudni, hogy a névadó ünnepség nem keresztelő, hanem annak alternatívája, vagy akár kiegészítője. A névadó rítus egy polgári szertartás, nem kötődik vallási dogmákhoz, sokkal inkább egy egyedi, könnyedebb hangulatú, rugalmas, és személyre szabott ceremónia.",
+                "Egy meghitt, örömteli családi ünnep, amikor az újszülött gyermek érkezésének alkalmából az életébe való szeretetteljes köszöntése-, és a gyermek hivatalos nevének átadása történik. A szülők és a névadó szülők (keresztszülők) szimbolikus fogadalmakat tesznek, és én - mint szertartásvezető emléklapot adok át. A névadó szertartást általában kiegészítjük zenei- és egyéb szimbolikus elemekkel, pl. gyertyagyújtással, vagy homokceremóniával. Ezen a kedves, megható és vidám szertartáson a család együtt ünnepli az új jövevény érkezését, általában összekötve egy közös lakomával, kerti party-val, vagy egy vidám és kötetlen állófogadással.",
             ],
             gallery: [
                 "assets/kepek/nevado/nevado-unnepseg-csalad-egyutt.webp",
@@ -160,7 +167,7 @@ const SITE_DATA = {
         eyebrow: "Átlátható díjazás",
         title: "Szolgáltatások és árak",
         subtitle:
-            "Nincs rejtett költség, éjszakai felár vagy vendéglétszámtól függő szorzó. Az alapárakat kizárólag a Budapest 20 km-es körzetén túli kiszállási távolság befolyásolja.",
+            "Nincs rejtett költség, éjszakai felár vagy vendéglétszámtól függő szorzó. Az alapárakat kizárólag a Budapest 50 km-es körzetén túli kiszállási távolság befolyásolja.",
         items: [
             { name: "Esküvői szertartás magyar nyelven – HÉTKÖZNAP", note: "Bármely napszakban", price: "80.000 Ft", unit: "alapár" },
             { name: "Esküvői szertartás magyar nyelven – HÉTVÉGÉN", note: "Bármely napszakban", price: "100.000 Ft", unit: "irányár" },
@@ -169,20 +176,18 @@ const SITE_DATA = {
             { name: "Házassági évforduló / Fogadalom megújítás", note: "Személyre szabott ünnepi ceremónia", price: "50.000 Ft", unit: "fix" },
             { name: "Névadó szertartás, gyermekköszöntő", note: "Emléklappal és szimbolikus rituálékkal", price: "50.000 Ft", unit: "fix" },
             { name: "Szertartás hangosítás", note: "Igény esetén biztosítva", price: "20.000 Ft", unit: "opcionális" },
-            { name: "„2 in 1” csomag: Szertartásvezető + Ceremóniamester", note: "Max. 8 órás időtartamra – bármely napon", price: "250.000 Ft-tól", unit: "csomag", featured: true },
         ],
         included: [
-            "Budapesten és 20 km-es körzetén belül a kiszállási díj",
+            "Budapesten és 50 km-es körzetén belül a kiszállási díj",
             "10+ éves szertartásvezetői tapasztalatom",
-            "Korlátlan telefonos, személyes és online egyeztetés",
             "Teljesen személyre szabott esketőszöveg megírása",
             "A szertartás profi, érthető lebonyolítása",
             "Díszes emléklap fakeretben",
             "Kedvesség, figyelem, empátia, pontosság és humor",
             "Ingyenes kellékkölcsönzés (dekoráció, asztaldísz, gyertya, gyűrűpárna/doboz)",
         ],
-        wildeQuote: "„Az olcsó dolgoknak van egy szörnyű hibájuk: nem érik meg azt a pénzt, amit fizetsz értük.”",
-        wildeAuthor: "Oscar Wilde",
+        includedImage: "assets/kepek/fooldal/gondtalan-elokeszulet.webp",
+        includedImageAlt: "Gondtalan előkészület és ajándék kellékek",
     },
     references: {
         eyebrow: "Párok visszajelzései",
@@ -392,7 +397,6 @@ const SITE_DATA = {
         title: "Beszéljünk a Nagy Napotokról",
         subtitle:
             "„A tökéletes szertartás nem rólam szól, hanem rólatok – rólatok, a ti történetetekről.”",
-        photo: "assets/kepek/kapcsolat/KAPCSOLAT-ALLO.webp",
     },
     legal: {
         impresszum: [
