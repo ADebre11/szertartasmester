@@ -401,20 +401,21 @@
                             <h3 style="font-family:var(--font-serif);margin:0 0 6px 0;font-size:1.45rem;">Visszahívás & Időpont egyeztetés</h3>
                             <p style="margin:0 0 22px 0;color:var(--text-muted);font-size:0.92rem;">Adjátok meg a főbb adatokat, és 24 órán belül visszahívlak vagy írok Nektek!</p>
                             <form id="inquiry-form">
+                                <input type="checkbox" id="inq-botcheck" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
                                 <div class="form-group">
                                     <label for="inq-name">Neved / Nevetek *</label>
-                                    <input id="inq-name" type="text" required placeholder="Pl. Anna és Peti" />
+                                    <input id="inq-name" name="name" type="text" required placeholder="Pl. Anna és Peti" />
                                 </div>
                                 <div class="form-group">
                                     <label for="inq-contact">Telefonszám vagy E-mail *</label>
-                                    <input id="inq-contact" type="text" required placeholder="+36 30 ... vagy nev@gmail.com" />
+                                    <input id="inq-contact" name="contact" type="text" required placeholder="+36 30 ... vagy nev@gmail.com" />
                                 </div>
                                 <div class="form-group">
                                     <label for="inq-details">Esküvő dátuma, helyszíne és üzenet</label>
-                                    <textarea id="inq-details" rows="4" placeholder="Pl. 2027. június 12., Budapest környéke, esküvői szertartásvezetés..."></textarea>
+                                    <textarea id="inq-details" name="details" rows="4" placeholder="Pl. 2027. június 12., Budapest környéke, esküvői szertartásvezetés..."></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary" style="width:100%;">Ajánlatot / Visszahívást kérek →</button>
-                                <div id="form-status" class="form-status"></div>
+                                <button type="submit" id="inquiry-submit-btn" class="btn btn-primary" style="width:100%;">Ajánlatot / Visszahívást kérek →</button>
+                                <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
                             </form>
                         </div>
                     </div>
@@ -422,17 +423,58 @@
             </div>
         `;
 
-        el("inquiry-form").addEventListener("submit", (e) => {
+        const form = el("inquiry-form");
+        const submitBtn = el("inquiry-submit-btn");
+        const status = el("form-status");
+
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
+            if (el("inq-botcheck").checked) return;
+
             const name = el("inq-name").value.trim();
             const contact = el("inq-contact").value.trim();
             const details = el("inq-details").value.trim();
-            const subject = encodeURIComponent(`Szertartásvezető érdeklődés – ${name}`);
-            const body = encodeURIComponent(`Név: ${name}\nElérhetőség: ${contact}\nÜzenet / Részletek:\n${details}`);
-            const status = el("form-status");
-            status.innerHTML = `Köszönöm, ${name}! Ha nem nyílt meg az e-mail kliensed, közvetlenül is elérsz a <strong>${b.phone}</strong> számon vagy az <a href="mailto:${b.email}?subject=${subject}&body=${body}" style="text-decoration:underline;">${b.email}</a> címen.`;
-            status.classList.add("visible");
-            window.location.href = `mailto:${b.email}?subject=${subject}&body=${body}`;
+            const origText = submitBtn.textContent;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Küldés folyamatban...";
+            status.className = "form-status";
+            status.textContent = "";
+
+            const payload = {
+                access_key: c.web3formsKey,
+                subject: `Szertartásmester.hu – Új ajánlatkérés (${name})`,
+                from_name: `${name} – Szertartásmester.hu`,
+                Név: name,
+                Elérhetőség: contact,
+                Üzenet: details || "(Nem adott meg külön üzenetet)",
+            };
+            if (contact.includes("@")) {
+                payload.email = contact;
+                payload.replyto = contact;
+            }
+
+            try {
+                const res = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", Accept: "application/json" },
+                    body: JSON.stringify(payload),
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    form.reset();
+                    status.innerHTML = `Köszönöm, <strong>${name}</strong>! Az üzenetedet sikeresen továbbítottam, 24 órán belül kereslek!`;
+                    status.classList.add("visible");
+                } else {
+                    throw new Error(data.message || "Hiba történt a küldés során.");
+                }
+            } catch (_err) {
+                status.innerHTML = `Sajnos a küldés most nem sikerült. Kérlek, hívj közvetlenül a <strong><a href="${b.phoneHref}" style="text-decoration:underline;">${b.phone}</a></strong> számon, vagy írj az <a href="mailto:${b.email}" style="text-decoration:underline;">${b.email}</a> címre!`;
+                status.classList.add("visible", "error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = origText;
+            }
         });
     }
 

@@ -397,6 +397,7 @@ const SITE_DATA = {
         title: "Beszéljünk a Nagy Napotokról",
         subtitle:
             "„A tökéletes szertartás nem rólam szól, hanem rólatok – rólatok, a ti történetetekről.”",
+        web3formsKey: "60beb71c-f73d-4e75-b0ea-2914abf7e1b5",
     },
     legal: {
         impresszum: [
