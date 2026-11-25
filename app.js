@@ -335,8 +335,7 @@
                 <div class="container">
                     <div class="section-header">
                         <span class="eyebrow">Blog & Inspiráció</span>
-                        <h2 class="section-title">Érdekességek az esküvők világából</h2>
-                        <p class="section-subtitle">Gondolatok, divattörténet és inspirációk életetek legszebb ünnepéhez.</p>
+                        <h2 class="section-title">Érdekességek, inspirációk, gondolatok életünk legszebb ünnepeiről</h2>
                     </div>
                     <div class="blog-grid">
                         ${SITE_DATA.blogs
