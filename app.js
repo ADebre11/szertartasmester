@@ -587,6 +587,9 @@
             ? b.blocks
                   .map((blk) => {
                       if (blk.type === "h3") return `<h3>${blk.text}</h3>`;
+                      if (blk.type === "ul") {
+                          return `<ul class="blog-inline-list">${blk.items.map((it) => `<li>${it}</li>`).join("")}</ul>`;
+                      }
                       if (blk.type === "img") {
                           return `<figure class="blog-inline-figure"><img src="${blk.src}" alt="${blk.alt || b.title}" class="blog-inline-img" loading="lazy" /></figure>`;
                       }
