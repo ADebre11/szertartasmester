@@ -405,7 +405,6 @@ const SITE_DATA = {
                 "A középkortól a rokokóig az esküvői ruha jóval többet jelentett egyszerű ünnepi viseletnél: gazdagságot, rangot és színekbe rejtett üzeneteket hordozott.",
             cover: "assets/kepek/blog/2-eskuvoi-divat/kozepkor-kollazs.webp",
             blocks: [
-                { type: "h3", text: "Az esküvői öltözék a KÖZÉPKORTÓL A ROKOKÓIG – amikor a ruha többet mondott a szerelemnél" },
                 { type: "h3", text: "A KÖZÉPKOR – pompa, gazdagság és társadalmi rang (V-XV. század)" },
                 { type: "p", text: "Ha ma elképzelünk egy középkori esküvőt, szinte biztosan egy mesebeli kastély, hosszú uszályos ruha és fényes páncélba öltözött lovag jelenik meg előttünk. De a valóság azonban ennél jóval árnyaltabb volt!" },
                 { type: "p", text: "A középkorban – a fehér ruha még egyáltalán nem számított általános esküvői viseletnek! Ebben a több mint ezeréves időszakban – az esküvők világában a házasság gyakran politikai vagy gazdasági szövetséget jelentett. Különösen az uralkodói és nemesi családok körében az esküvői ruha feladata az volt, hogy megmutassa a család gazdagságát és hatalmát. A középkori esküvőkben egyébként már felfedezhetjük a modern esküvői öltözékek elődjeit, és bizonyos ma is használatos esküvői szokások is ebben a korban gyökereznek!" },
