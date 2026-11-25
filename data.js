@@ -9,6 +9,7 @@ const SITE_DATA = {
         email: "anita@szertartasmester.hu",
         facebook: "https://www.facebook.com/szertartasmesteranita",
         instagram: "https://www.instagram.com/szertartasvezeto_anita",
+        tiktok: "",
         hours: "Minden hétköznap és hétvégén 8:00 – 20:00",
         location: "Budapest, Pest megye és országosan",
     },
