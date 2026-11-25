@@ -1336,6 +1336,24 @@ a {
     border-radius: 12px;
 }
 
+.blog-inline-figure {
+    margin: 18px auto;
+    text-align: center;
+}
+
+.blog-inline-img {
+    width: 100%;
+    max-width: 480px;
+    max-height: 290px;
+    object-fit: contain;
+    margin: 0 auto;
+    border-radius: 14px;
+    border: 1px solid var(--border-soft);
+    background: #faf5f4;
+    padding: 6px;
+    box-shadow: 0 6px 20px rgba(90, 55, 55, 0.08);
+}
+
 .lightbox-header {
     display: flex;
     align-items: center;

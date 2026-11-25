@@ -583,16 +583,30 @@
         activeLightboxIdx = null;
         const b = SITE_DATA.blogs.find((item) => item.id === blogId);
         if (!b) return;
+        const bodyHtml = b.blocks
+            ? b.blocks
+                  .map((blk) => {
+                      if (blk.type === "h3") return `<h3>${blk.text}</h3>`;
+                      if (blk.type === "img") {
+                          return `<figure class="blog-inline-figure"><img src="${blk.src}" alt="${blk.alt || b.title}" class="blog-inline-img" loading="lazy" /></figure>`;
+                      }
+                      return `<p>${blk.text}</p>`;
+                  })
+                  .join("")
+            : `
+                <img src="${b.cover}" alt="${b.title}" class="blog-inline-img" />
+                ${b.sections.map((sec) => `<h3>${sec.heading}</h3><p>${sec.body}</p>`).join("")}
+                ${
+                    b.gallery && b.gallery.length
+                        ? `<div class="modal-gallery">${b.gallery.map((g) => `<img src="${g}" alt="${b.title}" />`).join("")}</div>`
+                        : ""
+                }
+            `;
+
         openModal(`
             <span class="eyebrow">${b.date}</span>
             <h2>${b.title}</h2>
-            <img src="${b.cover}" alt="${b.title}" style="width:100%;max-height:320px;object-fit:cover;border-radius:16px;margin:12px 0 20px;" />
-            ${b.sections.map((sec) => `<h3>${sec.heading}</h3><p>${sec.body}</p>`).join("")}
-            ${
-                b.gallery.length
-                    ? `<div class="modal-gallery">${b.gallery.map((g) => `<img src="${g}" alt="${b.title}" />`).join("")}</div>`
-                    : ""
-            }
+            ${bodyHtml}
         `);
     }
 
