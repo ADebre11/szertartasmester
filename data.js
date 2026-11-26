@@ -27,7 +27,12 @@ const SITE_DATA = {
         badgeLines: ["Okleveles szertartásvezető", "10+ év tapasztalat"],
         title: "Szertartás, amely <span>valóban Rólatok szól</span>",
         description:
-            "Személyre szabott esküvői szertartásvezetés, házassági évforduló, és névadó ceremónia Budapesten, országosan és határon túl * Kötöttségek helyett szabadság * Sablonok helyett egyediség * Szertartás úgy - ahogy megálmodtátok",
+            "Személyre szabott esküvői szertartásvezetés, házassági évforduló, és névadó ceremónia Budapesten, országosan és határon túl",
+        descriptionPoints: [
+            "Kötöttségek helyett szabadság",
+            "Sablonok helyett egyediség",
+            "Szertartás úgy - ahogy megálmodtátok",
+        ],
         image: "assets/hero-anita-new.webp",
         primaryCta: "Hívj most: +36 70 335 4440",
         secondaryCta: "Ajánlatot kérek",

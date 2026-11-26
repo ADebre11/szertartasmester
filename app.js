@@ -56,6 +56,15 @@
             ? `<span>${h.badgeLines[0]}</span><span class="hero-badge-sep" aria-hidden="true">•</span><span>${h.badgeLines[1]}</span>`
             : h.badge;
 
+        const descHtml = Array.isArray(h.descriptionPoints)
+            ? `<span class="hero-desc-lead">${h.description} <span class="hero-desc-star">*</span></span> <span class="hero-desc-points">${h.descriptionPoints
+                  .map(
+                      (pt) =>
+                          `<span class="hero-desc-point"><span class="hero-desc-star-mob">* </span>${pt}<span class="hero-desc-sep"> *</span></span>`
+                  )
+                  .join(" ")}</span>`
+            : h.description;
+
         el("hero-mount").innerHTML = `
             <div class="hero">
                 <img src="${h.image}" alt="${SITE_DATA.brand.name}" class="hero-bg" />
@@ -67,7 +76,7 @@
                     <div class="hero-content">
                         <div class="hero-badge hero-badge-mobile">${badgeHtml}</div>
                         <h1 class="hero-title">${h.title}</h1>
-                        <p class="hero-desc">${h.description}</p>
+                        <p class="hero-desc">${descHtml}</p>
                         <div class="hero-ctas">
                             <a href="${SITE_DATA.brand.phoneHref}" class="btn btn-gold">☎ ${h.primaryCta}</a>
                             <a href="#contact-mount" class="btn btn-outline-light">${h.secondaryCta} →</a>
@@ -661,12 +670,27 @@
         `);
     }
 
+    const isEditable = (t) => t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA");
+
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeModal();
         if (activeLightboxIdx !== null) {
             if (e.key === "ArrowLeft") openLightbox(activeLightboxIdx - 1);
             if (e.key === "ArrowRight") openLightbox(activeLightboxIdx + 1);
         }
+        if (!isEditable(e.target) && (e.ctrlKey || e.metaKey)) {
+            if (["c", "x", "u", "s", "a"].includes(e.key.toLowerCase())) e.preventDefault();
+        }
+    });
+
+    ["contextmenu", "copy", "cut"].forEach((evt) => {
+        document.addEventListener(evt, (e) => {
+            if (!isEditable(e.target)) e.preventDefault();
+        });
+    });
+
+    document.addEventListener("dragstart", (e) => {
+        if (e.target && e.target.tagName === "IMG") e.preventDefault();
     });
 
     renderNavbar();
