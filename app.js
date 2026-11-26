@@ -52,16 +52,20 @@
 
     function renderHero() {
         const h = SITE_DATA.hero;
+        const badgeHtml = Array.isArray(h.badgeLines)
+            ? `<span>${h.badgeLines[0]}</span><span class="hero-badge-sep" aria-hidden="true">•</span><span>${h.badgeLines[1]}</span>`
+            : h.badge;
+
         el("hero-mount").innerHTML = `
             <div class="hero">
                 <img src="${h.image}" alt="${SITE_DATA.brand.name}" class="hero-bg" />
                 <div class="hero-overlay"></div>
                 <div class="container hero-container">
                     <div class="hero-badge-top">
-                        <div class="hero-badge">${h.badge}</div>
+                        <div class="hero-badge">${badgeHtml}</div>
                     </div>
                     <div class="hero-content">
-                        <div class="hero-badge hero-badge-mobile">${h.badge}</div>
+                        <div class="hero-badge hero-badge-mobile">${badgeHtml}</div>
                         <h1 class="hero-title">${h.title}</h1>
                         <p class="hero-desc">${h.description}</p>
                         <div class="hero-ctas">
@@ -187,7 +191,7 @@
                     </div>
                     <div class="included-box">
                         <div>
-                            <span class="eyebrow sage">Minden alapár tartalmazza</span>
+                            <span class="included-kicker">Minden alapár tartalmazza</span>
                             <h3 style="font-family:var(--font-serif);margin:0;font-size:1.45rem;">Gondtalan előkészület és ajándék kellékek</h3>
                             <ul class="included-list">
                                 ${p.included.map((inc) => `<li><span class="check-icon">✓</span><span>${inc}</span></li>`).join("")}

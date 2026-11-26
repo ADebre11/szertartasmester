@@ -24,6 +24,7 @@ const SITE_DATA = {
     ],
     hero: {
         badge: "Okleveles szertartásvezető • 10+ év tapasztalat",
+        badgeLines: ["Okleveles szertartásvezető", "10+ év tapasztalat"],
         title: "Szertartás, amely <span>valóban Rólatok szól</span>",
         description:
             "Személyre szabott esküvői szertartásvezetés, házassági évforduló, és névadó ceremónia Budapesten, országosan és határon túl * Kötöttségek helyett szabadság * Sablonok helyett egyediség * Szertartás úgy - ahogy megálmodtátok",
@@ -179,6 +180,7 @@ const SITE_DATA = {
             { name: "Szertartás hangosítás", note: "Igény esetén biztosítva", price: "20.000 Ft", unit: "opcionális" },
         ],
         included: [
+            "Korlátlan számú előzetes egyeztetés",
             "Budapesten és 50 km-es körzetén belül a kiszállási díj",
             "10+ éves szertartásvezetői tapasztalatom",
             "Teljesen személyre szabott esketőszöveg megírása",

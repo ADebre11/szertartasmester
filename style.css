@@ -462,7 +462,21 @@ a {
    ABOUT
    ========================================================================== */
 .about-section {
-    background: var(--bg-white);
+    position: relative;
+    background: url("assets/kepek/fooldal/hatterkep-szertartasmester.webp") center / cover no-repeat;
+}
+
+.about-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 250, 248, 0.56);
+    z-index: 0;
+}
+
+.about-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 .about-grid {
@@ -470,6 +484,12 @@ a {
     grid-template-columns: 0.92fr 1.08fr;
     gap: 54px;
     align-items: center;
+    background: linear-gradient(135deg, rgba(255, 252, 249, 0.9) 0%, rgba(255, 246, 246, 0.86) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 161, 69, 0.35);
+    border-radius: 26px;
+    padding: 38px 42px;
+    box-shadow: 0 20px 50px rgba(45, 22, 30, 0.14);
 }
 
 .about-photo-frame {
@@ -729,6 +749,21 @@ a {
     grid-template-columns: 1.2fr 0.8fr;
     gap: 32px;
     align-items: center;
+}
+
+.included-kicker {
+    display: inline-block;
+    padding: 7px 18px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(135deg, rgba(164, 74, 96, 0.14) 0%, rgba(201, 161, 69, 0.2) 100%);
+    border: 1.5px solid rgba(164, 74, 96, 0.45);
+    color: var(--rose-dark);
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(164, 74, 96, 0.08);
 }
 
 .included-list {
@@ -1526,6 +1561,18 @@ a {
     }
     .hero-badge.hero-badge-mobile {
         display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 3px;
+        line-height: 1.35;
+        padding: 8px 18px;
+    }
+    .hero-badge-sep {
+        display: none;
+    }
+    .about-grid {
+        padding: 24px 20px;
     }
     .hero-overlay {
         top: 170px;
