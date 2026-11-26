@@ -509,7 +509,7 @@ const SITE_DATA = {
             title: "Az esküvői divat változása évszázadokon át – 3. rész (19. századtól napjainkig)",
             excerpt:
                 "Viktória királynő fehér ruhájától a hollywoodi elegancián és a hetvenes évek bohém szabadságán át a mai menyasszonyok korlátlan választásáig.",
-            cover: "assets/kepek/blog/3-eskuvoi-divat/3.Blog-Foto01.webp",
+            cover: "assets/kepek/blog/3-eskuvoi-divat/ujkor-cimfoto.webp",
             blocks: [
                 { type: "h3", text: "Az esküvői ruha története a 19. századtól napjainkig" },
                 { type: "p", text: "Ha ma azt mondjuk: menyasszony, a legtöbb ember fejében hasonló kép jelenik meg. Egy gyönyörű nő, hosszú, fehér vagy törtfehér ruhában, fátyollal a fején, kezében virágcsokorral, amint lassan végigsétál az oltár felé. És valószínűleg van a közelben egy izgatott édesanya is, aki körülbelül ötpercenként megkérdezi: „Ugye nem léptél rá az uszályra?”" },
@@ -597,7 +597,7 @@ const SITE_DATA = {
             title: "Az esküvői divat változása évszázadokon át – 2. rész (Középkortól rokokóig)",
             excerpt:
                 "A középkortól a rokokóig az esküvői ruha jóval többet jelentett egyszerű ünnepi viseletnél: gazdagságot, rangot és színekbe rejtett üzeneteket hordozott.",
-            cover: "assets/kepek/blog/2-eskuvoi-divat/kozepkor-kollazs.webp",
+            cover: "assets/kepek/blog/2-eskuvoi-divat/kozepkor-cimfoto.webp",
             blocks: [
                 { type: "h3", text: "A KÖZÉPKOR – pompa, gazdagság és társadalmi rang (V-XV. század)" },
                 { type: "p", text: "Ha ma elképzelünk egy középkori esküvőt, szinte biztosan egy mesebeli kastély, hosszú uszályos ruha és fényes páncélba öltözött lovag jelenik meg előttünk. De a valóság azonban ennél jóval árnyaltabb volt!" },
@@ -665,7 +665,7 @@ const SITE_DATA = {
             title: "Az esküvői divat változása évszázadokon át – 1. rész (Ókor)",
             excerpt:
                 "Vannak, akik szerint két dolog van, amin nem szabad spórolni: a menyasszonyi ruha és a torta. Utazzunk vissza Egyiptomba, Görögországba és Rómába több ezer év távlatából!",
-            cover: "assets/kepek/blog/eskuvoi-divat-valtozasa-evszazadokon-at-okor/1.OKOR-KOLLAZS.webp",
+            cover: "assets/kepek/blog/eskuvoi-divat-valtozasa-evszazadokon-at-okor/okor-cimfoto.webp",
             blocks: [
                 { type: "h3", text: "Az esküvői öltözék az ÓKOR-ban" },
                 { type: "p", text: "Vannak, akik szerint két dolog van – amin nem szabad spórolni, ha esküvőre kerül a sor. Az egyik a menyasszonyi ruha, a másik pedig a torta – mégpedig azért, mert egyesek szerint a vendégek később kizárólag ezekre fognak emlékezni." },
